@@ -1,0 +1,29 @@
+{
+  "name": "@hexlet/code",
+  "version": "1.0.0",
+  "description": "my second learning project in the Frontend profession",
+  "bin": {
+    "gendiff2022": "bin/gendiff.js"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "npx jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vlad-Code/frontend-project-lvl2.git"
+  },
+  "keywords": [
+    "genDiff"
+  ],
+  "author": "Vladislav Kungurov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vlad-Code/frontend-project-lvl2/issues"
+  },
+  "type": "module",
+  "homepage": "https://github.com/Vlad-Code/frontend-project-lvl2#readme",
+  "dependencies": {
+    "commander": "^9.4.0"
+  }
+}
