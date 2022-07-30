@@ -24,6 +24,12 @@
   "type": "module",
   "homepage": "https://github.com/Vlad-Code/frontend-project-lvl2#readme",
   "dependencies": {
-    "commander": "^9.4.0"
+    "commander": "^9.4.0",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "eslint": "^8.20.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0"
   }
 }
