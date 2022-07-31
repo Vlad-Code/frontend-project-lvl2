@@ -7,8 +7,8 @@ const getDiff = (filePath1, filePath2) => {
   const cwd = process.cwd();
   const absoluteFilePath1 = path.resolve(cwd, filePath1);
   const absoluteFilePath2 = path.resolve(cwd, filePath2);
-  const file1 = readFileSync(absoluteFilePath1);
-  const file2 = readFileSync(absoluteFilePath2);
+  const file1 = readFileSync(absoluteFilePath1, 'utf-8');
+  const file2 = readFileSync(absoluteFilePath2, 'utf-8');
   const fileData1 = JSON.parse(file1);
   const fileData2 = JSON.parse(file2);
   const keys1 = Object.keys(fileData1);
@@ -28,6 +28,7 @@ const getDiff = (filePath1, filePath2) => {
     return acc;
   }, []);
   console.log(`{\n  ${result.join('\n  ')}\n}`);
+  return `{\n  ${result.join('\n  ')}\n}`;
 };
 
 export default getDiff;

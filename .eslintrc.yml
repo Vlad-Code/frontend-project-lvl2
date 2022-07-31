@@ -4,6 +4,7 @@ env:
 
 extends:
   - "airbnb-base"
+  - 'plugin:jest/recommended'
 
 parserOptions:
   ecmaVersion: latest
@@ -14,3 +15,4 @@ rules:
     - error
     - ignorePackages
     - js: always
+  no-underscore-dangle: [2, { "allow": ["__filename", "__dirname"] }]

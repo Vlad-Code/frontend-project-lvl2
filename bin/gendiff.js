@@ -12,9 +12,8 @@ program
   .version('1.0.0')
   .arguments('<filepath1> <filepath2>')
   .action((filepath1, filepath2) => getDiff(filepath1, filepath2));
-  
 
 program
   .option('-f, --format <type>', 'output format');
 
-program.parse(process.argv); 
+program.parse(process.argv);
