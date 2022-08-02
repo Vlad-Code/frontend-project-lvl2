@@ -9,6 +9,6 @@ test('check function for flat files', () => {
   const __dirname = dirname(__filename);
   const filePath1 = path.join(__dirname, '..', '__fixtures__', 'before.json');
   const filePath2 = path.join(__dirname, '..', '__fixtures__', 'after.json');
-  const result = readFileSync(`${__dirname}/../__fixtures__/result`, 'utf-8');
+  const result = readFileSync(`${__dirname}/../__fixtures__/result.txt`, 'utf-8');
   expect(getDiff(filePath1, filePath2)).toEqual(result);
 });
