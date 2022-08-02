@@ -2,7 +2,7 @@
 
 import { Command } from 'commander';
 
-import getDiff from '../flatGendiff.js';
+import getDiff from '../src/index.js';
 
 const program = new Command();
 
