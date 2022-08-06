@@ -7,3 +7,5 @@
 The comparison of two flat json files
 <a href="https://asciinema.org/a/512152" target="_blank"><img src="https://asciinema.org/a/512152.svg" /></a>
 The comparison of two flat yml files
+<a href="https://asciinema.org/a/512995" target="_blank"><img src="https://asciinema.org/a/512995.svg" /></a>
+The comparison recursively of two tree-files

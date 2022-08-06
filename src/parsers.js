@@ -1,6 +1,4 @@
-import path from 'node:path';
 import yaml from 'js-yaml';
-import { readFileSync } from 'node:fs';
 
 const parseFile = (file, extension) => {
   let fileData;
