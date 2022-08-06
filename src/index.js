@@ -25,6 +25,7 @@ const genDiff = (filePath1, filePath2, format = 'stylish') => {
     console.log(plain);
     return plain;
   }
+  return null;
 };
 
 export default genDiff;
