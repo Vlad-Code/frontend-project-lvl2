@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import parseFile from './parsers.js';
 import buildDiff from './buildDiff.js';
-import getStylish from './formaters.js';
+import { getStylish, getPlain } from './formaters.js';
 
 const genDiff = (filePath1, filePath2, format = 'stylish') => {
   const fileExtension1 = path.extname(filePath1);
@@ -20,7 +20,11 @@ const genDiff = (filePath1, filePath2, format = 'stylish') => {
     console.log(stylish);
     return stylish;
   }
-  return null;
+  if (format === 'plain') {
+    const plain = getPlain(differense);
+    console.log(plain);
+    return plain;
+  }
 };
 
 export default genDiff;
