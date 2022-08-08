@@ -19,32 +19,29 @@ const getValue = (object, replacer, depth) => {
 
 const getStylish = (diff) => {
   const iter = (differense, replacer = '  ', depth = 1) => {
-    const keysOfDiff = Object.keys(differense);
-    const result = keysOfDiff.reduce((acc, key) => {
-      if (!Array.isArray(differense[key])) {
-        acc.push(`${replacer.repeat(depth)}  ${key}: ${iter(differense[key], replacer, depth + 2)}`);
-      } else {
+    const result = Object
+      .keys(differense)
+      .flatMap((key) => {
+        if (_.isObject(differense[key]) && !Array.isArray(differense[key])) {
+          return `${replacer.repeat(depth)}  ${key}: ${iter(differense[key], replacer, depth + 2)}`;
+        }
         const [status, value1, value2] = differense[key];
         switch (status) {
           case 'deleted':
-            acc.push(`${replacer.repeat(depth)}- ${key}: ${getValue(value1, replacer, depth)}`);
-            break;
+            return `${replacer.repeat(depth)}- ${key}: ${getValue(value1, replacer, depth)}`;
           case 'added':
-            acc.push(`${replacer.repeat(depth)}+ ${key}: ${getValue(value2, replacer, depth)}`);
-            break;
+            return `${replacer.repeat(depth)}+ ${key}: ${getValue(value2, replacer, depth)}`;
           case 'unchanged':
-            acc.push(`${replacer.repeat(depth)}  ${key}: ${getValue(value1, replacer, depth)}`);
-            break;
+            return `${replacer.repeat(depth)}  ${key}: ${getValue(value1, replacer, depth)}`;
           case 'changed':
-            acc.push(`${replacer.repeat(depth)}- ${key}: ${getValue(value1, replacer, depth)}`);
-            acc.push(`${replacer.repeat(depth)}+ ${key}: ${getValue(value2, replacer, depth)}`);
-            break;
+            return [
+              `${replacer.repeat(depth)}- ${key}: ${getValue(value1, replacer, depth)}`,
+              `${replacer.repeat(depth)}+ ${key}: ${getValue(value2, replacer, depth)}`,
+            ];
           default:
             throw new Error(`Unknown status: ${status}`);
         }
-      }
-      return acc;
-    }, []);
+      });
     return `{\n${result.join('\n')}\n${replacer.repeat(depth - 1)}}`;
   };
   return iter(diff);

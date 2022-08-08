@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "my second learning project in the Frontend profession",
   "bin": {
-    "gendiff2022": "bin/gendiff.js"
+    "gendiff": "bin/gendiff.js"
   },
   "main": "index.js",
   "scripts": {

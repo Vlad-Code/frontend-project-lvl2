@@ -19,13 +19,13 @@ beforeAll(() => {
 test('check function for tree json files stylish format', () => {
   const filePathJson1 = path.join(__dirname, '..', '__fixtures__', 'beforeTree.json');
   const filePathJson2 = path.join(__dirname, '..', '__fixtures__', 'afterTree.json');
-  expect(genDiff(filePathJson1, filePathJson2)).toEqual(resultForTreeStylish);
+  expect(genDiff(filePathJson1, filePathJson2, 'stylish')).toEqual(resultForTreeStylish);
 });
 
 test('check function for tree yaml files stylish format', () => {
   const filePathYaml1 = path.join(__dirname, '..', '__fixtures__', 'beforeTree.yml');
   const filePathYaml2 = path.join(__dirname, '..', '__fixtures__', 'afterTree.yml');
-  expect(genDiff(filePathYaml1, filePathYaml2)).toEqual(resultForTreeStylish);
+  expect(genDiff(filePathYaml1, filePathYaml2, 'stylish')).toEqual(resultForTreeStylish);
 });
 
 test('check function for tree json files plain format', () => {

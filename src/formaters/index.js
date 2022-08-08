@@ -3,16 +3,16 @@ import getStylish from './stylish.js';
 import getJSON from './json.js';
 
 const getFormatedOutput = (diff, format) => {
-  if (format === 'plain') {
-    console.log(getPlain(diff));
-    return getPlain(diff);
+  switch (format) {
+    case 'stylish':
+      return getStylish(diff);
+    case 'plain':
+      return getPlain(diff);
+    case 'json':
+      return getJSON(diff);
+    default:
+      throw new Error(`Unknown format: ${format}`);
   }
-  if (format === 'json') {
-    console.log(getJSON(diff));
-    return getJSON(diff);
-  }
-  console.log(getStylish(diff));
-  return getStylish(diff, format);
 };
 
 export default getFormatedOutput;
