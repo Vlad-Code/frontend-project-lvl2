@@ -9,3 +9,5 @@ The comparison of two flat json files
 The comparison of two flat yml files
 <a href="https://asciinema.org/a/512995" target="_blank"><img src="https://asciinema.org/a/512995.svg" /></a>
 The comparison recursively of two tree-files
+<a href="https://asciinema.org/a/513328" target="_blank"><img src="https://asciinema.org/a/513328.svg" /></a>
+The plain format for the outputt of the difference

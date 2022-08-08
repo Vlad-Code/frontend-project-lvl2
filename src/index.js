@@ -2,9 +2,9 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import parseFile from './parsers.js';
 import buildDiff from './buildDiff.js';
-import { getStylish, getPlain } from './formaters.js';
+import getFormatedOutput from './formaters/index.js';
 
-const genDiff = (filePath1, filePath2, format = 'stylish') => {
+const genDiff = (filePath1, filePath2, format) => {
   const fileExtension1 = path.extname(filePath1);
   const fileExtension2 = path.extname(filePath2);
   const cwd = process.cwd();
@@ -15,17 +15,8 @@ const genDiff = (filePath1, filePath2, format = 'stylish') => {
   const fileData1 = parseFile(file1, fileExtension1);
   const fileData2 = parseFile(file2, fileExtension2);
   const differense = buildDiff(fileData1, fileData2);
-  if (format === 'stylish') {
-    const stylish = getStylish(differense);
-    console.log(stylish);
-    return stylish;
-  }
-  if (format === 'plain') {
-    const plain = getPlain(differense);
-    console.log(plain);
-    return plain;
-  }
-  return null;
+  const formatedOutput = getFormatedOutput(differense, format);
+  return formatedOutput;
 };
 
 export default genDiff;
