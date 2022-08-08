@@ -11,3 +11,5 @@ The comparison of two flat yml files
 The comparison recursively of two tree-files
 <a href="https://asciinema.org/a/513328" target="_blank"><img src="https://asciinema.org/a/513328.svg" /></a>
 The plain format for the outputt of the difference
+<a href="https://asciinema.org/a/513344" target="_blank"><img src="https://asciinema.org/a/513344.svg" /></a>
+The json format for the output of the difference

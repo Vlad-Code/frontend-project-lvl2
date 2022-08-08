@@ -8,9 +8,9 @@ const buildDiff = (data1, data2) => {
     if (_.isObject(data1[key]) && _.isObject(data2[key])) {
       acc[key] = buildDiff(data1[key], data2[key]);
     } else if (!Object.hasOwn(data1, key)) {
-      acc[key] = ['added', data1[key], data2[key]];
+      acc[key] = ['added', "doesn't exist", data2[key]];
     } else if (!Object.hasOwn(data2, key)) {
-      acc[key] = ['deleted', data1[key], data2[key]];
+      acc[key] = ['deleted', data1[key], "doesn't exist"];
     } else if (data1[key] === data2[key]) {
       acc[key] = ['unchanged', data1[key], data2[key]];
     } else if (data1[key] !== data2[key]) {
