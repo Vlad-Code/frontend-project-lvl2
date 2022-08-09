@@ -4,50 +4,32 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import genDiff from '../src/index.js';
 
-let __dirname;
-let resultForTreeStylish;
-let resultForTreePlain;
-let resultForTreeJSON;
-beforeAll(() => {
+test.each([
+  {
+    fileExtension1: 'json', fileExtension2: 'json', format: 'stylish', result: 'resultForTreeStylish.txt',
+  },
+  {
+    fileExtension1: 'yml', fileExtension2: 'yml', format: 'stylish', result: 'resultForTreeStylish.txt',
+  },
+  {
+    fileExtension1: 'json', fileExtension2: 'json', format: 'plain', result: 'resultForTreePlain.txt',
+  },
+  {
+    fileExtension1: 'yml', fileExtension2: 'yml', format: 'plain', result: 'resultForTreePlain.txt',
+  },
+  {
+    fileExtension1: 'json', fileExtension2: 'json', format: 'json', result: 'resultForTreeJSON.json',
+  },
+  {
+    fileExtension1: 'yml', fileExtension2: 'yml', format: 'json', result: 'resultForTreeJSON.json',
+  },
+])('check function for tree $file1 files $format format', ({
+  fileExtension1, fileExtension2, format, result,
+}) => {
   const __filename = fileURLToPath(import.meta.url);
-  __dirname = dirname(__filename);
-  resultForTreeStylish = readFileSync(`${__dirname}/../__fixtures__/resultForTreeStylish.txt`, 'utf-8');
-  resultForTreePlain = readFileSync(`${__dirname}/../__fixtures__/resultForTreePlain.txt`, 'utf-8');
-  resultForTreeJSON = readFileSync(`${__dirname}/../__fixtures__/resultForTreeJSON.json`, 'utf-8');
-});
-
-test('check function for tree json files stylish format', () => {
-  const filePathJson1 = path.join(__dirname, '..', '__fixtures__', 'beforeTree.json');
-  const filePathJson2 = path.join(__dirname, '..', '__fixtures__', 'afterTree.json');
-  expect(genDiff(filePathJson1, filePathJson2, 'stylish')).toEqual(resultForTreeStylish);
-});
-
-test('check function for tree yaml files stylish format', () => {
-  const filePathYaml1 = path.join(__dirname, '..', '__fixtures__', 'beforeTree.yml');
-  const filePathYaml2 = path.join(__dirname, '..', '__fixtures__', 'afterTree.yml');
-  expect(genDiff(filePathYaml1, filePathYaml2, 'stylish')).toEqual(resultForTreeStylish);
-});
-
-test('check function for tree json files plain format', () => {
-  const filePathJson1 = path.join(__dirname, '..', '__fixtures__', 'beforeTree.json');
-  const filePathJson2 = path.join(__dirname, '..', '__fixtures__', 'afterTree.json');
-  expect(genDiff(filePathJson1, filePathJson2, 'plain')).toEqual(resultForTreePlain);
-});
-
-test('check function for tree yaml files plain format', () => {
-  const filePathYaml1 = path.join(__dirname, '..', '__fixtures__', 'beforeTree.yml');
-  const filePathYaml2 = path.join(__dirname, '..', '__fixtures__', 'afterTree.yml');
-  expect(genDiff(filePathYaml1, filePathYaml2, 'plain')).toEqual(resultForTreePlain);
-});
-
-test('check function for tree json files json format', () => {
-  const filePathJson1 = path.join(__dirname, '..', '__fixtures__', 'beforeTree.json');
-  const filePathJson2 = path.join(__dirname, '..', '__fixtures__', 'afterTree.json');
-  expect(genDiff(filePathJson1, filePathJson2, 'json')).toEqual(resultForTreeJSON);
-});
-
-test('check function for tree yaml files json format', () => {
-  const filePathYaml1 = path.join(__dirname, '..', '__fixtures__', 'beforeTree.yml');
-  const filePathYaml2 = path.join(__dirname, '..', '__fixtures__', 'afterTree.yml');
-  expect(genDiff(filePathYaml1, filePathYaml2, 'json')).toEqual(resultForTreeJSON);
+  const __dirname = dirname(__filename);
+  const filePath1 = path.join(__dirname, '..', '__fixtures__', `beforeTree.${fileExtension1}`);
+  const filePath2 = path.join(__dirname, '..', '__fixtures__', `afterTree.${fileExtension2}`);
+  const resultForTree = readFileSync(`${__dirname}/../__fixtures__/${result}`, 'utf-8');
+  expect(genDiff(filePath1, filePath2, format)).toEqual(resultForTree);
 });
