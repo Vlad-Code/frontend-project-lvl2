@@ -11,12 +11,13 @@ const handelValues = (value) => {
 };
 
 const getPlain = (diff, path = '') => {
-  const keys = Object.keys(diff);
-  const lines = keys.map((key) => {
-    if (!Array.isArray(diff[key])) {
-      return getPlain(diff[key], `${path}${key}.`);
+  const lines = diff.map((item) => {
+    const {
+      key, children, status, value1, value2,
+    } = item;
+    if (children.length > 0) {
+      return getPlain(children, `${path}${key}.`);
     }
-    const [status, value1, value2] = diff[key];
     switch (status) {
       case 'deleted':
         return `Property '${path}${key}' was removed`;

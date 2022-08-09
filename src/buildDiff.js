@@ -5,29 +5,46 @@ const buildDiff = (data1, data2) => {
   const keys2 = Object.keys(data2);
   const unionKeys = _.union(keys1, keys2);
   const sortedUnionKeys = _.sortBy(unionKeys, ((key) => key));
-  const differense = sortedUnionKeys.reduce((acc, key) => {
+  const differense = sortedUnionKeys.map((key) => {
     if (_.isObject(data1[key]) && _.isObject(data2[key])) {
-      // acc[key] = buildDiff(data1[key], data2[key]);
-      return { ...acc, [key]: buildDiff(data1[key], data2[key]) };
+      const children = buildDiff(data1[key], data2[key]);
+      return { key, children };
     }
     if (!Object.hasOwn(data1, key)) {
-      // acc[key] = ['added', "doesn't exist", data2[key]];
-      return { ...acc, [key]: ['added', "doesn't exist", data2[key]] };
+      return {
+        key,
+        children: [],
+        status: 'added',
+        value1: 'doesnt exist',
+        value2: data2[key],
+      };
     }
     if (!Object.hasOwn(data2, key)) {
-      // acc[key] = ['deleted', data1[key], "doesn't exist"];
-      return { ...acc, [key]: ['deleted', data1[key], "doesn't exist"] };
+      return {
+        key,
+        children: [],
+        status: 'deleted',
+        value1: data1[key],
+        value2: 'doesnt exist',
+      };
     }
     if (data1[key] === data2[key]) {
-      // acc[key] = ['unchanged', data1[key], data2[key]];
-      return { ...acc, [key]: ['unchanged', data1[key], data2[key]] };
+      return {
+        key,
+        children: [],
+        status: 'unchanged',
+        value1: data1[key],
+        value: data2[key],
+      };
     }
-    if (data1[key] !== data2[key]) {
-      // acc[key] = ['changed', data1[key], data2[key]];
-      return { ...acc, [key]: ['changed', data1[key], data2[key]] };
-    }
-    return acc;
-  }, {});
+    return {
+      key,
+      children: [],
+      status: 'changed',
+      value1: data1[key],
+      value2: data2[key],
+    };
+  });
   return differense;
 };
 
