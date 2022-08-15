@@ -4,32 +4,52 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import genDiff from '../src/index.js';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const getPathToFile = (fileName) => {
+  const pathToFile = path.join(__dirname, '..', '__fixtures__', `${fileName}`);
+  return pathToFile;
+};
+
 test.each([
   {
-    fileExtension1: 'json', fileExtension2: 'json', format: 'stylish', result: 'resultForTreeStylish.txt',
+    file1: 'file1.json', file2: 'file2.json', format: 'stylish', result: 'resultForTreeStylish.txt',
   },
   {
-    fileExtension1: 'yml', fileExtension2: 'yml', format: 'stylish', result: 'resultForTreeStylish.txt',
+    file1: 'file1.yml', file2: 'file2.yml', format: 'stylish', result: 'resultForTreeStylish.txt',
   },
   {
-    fileExtension1: 'json', fileExtension2: 'json', format: 'plain', result: 'resultForTreePlain.txt',
+    file1: 'file1.json', file2: 'file2.json', format: 'plain', result: 'resultForTreePlain.txt',
   },
   {
-    fileExtension1: 'yml', fileExtension2: 'yml', format: 'plain', result: 'resultForTreePlain.txt',
+    file1: 'file1.yml', file2: 'file2.yml', format: 'plain', result: 'resultForTreePlain.txt',
   },
   {
-    fileExtension1: 'json', fileExtension2: 'json', format: 'json', result: 'resultForTreeJSON.json',
+    file1: 'file1.json', file2: 'file2.json', format: 'json', result: 'resultForTreeJSON.json',
   },
   {
-    fileExtension1: 'yml', fileExtension2: 'yml', format: 'json', result: 'resultForTreeJSON.json',
+    file1: 'file1.yml', file2: 'file2.yml', format: 'json', result: 'resultForTreeJSON.json',
   },
-])('check function for tree $file1 files $format format', ({
-  fileExtension1, fileExtension2, format, result,
+])('check function for $file1 and $file2, output in $format format', ({
+  file1, file2, format, result,
 }) => {
-  const __filename = fileURLToPath(import.meta.url);
-  const __dirname = dirname(__filename);
-  const filePath1 = path.join(__dirname, '..', '__fixtures__', `beforeTree.${fileExtension1}`);
-  const filePath2 = path.join(__dirname, '..', '__fixtures__', `afterTree.${fileExtension2}`);
+  const pathToFile1 = getPathToFile(file1);
+  const pathToFile2 = getPathToFile(file2);
   const resultForTree = readFileSync(`${__dirname}/../__fixtures__/${result}`, 'utf-8');
-  expect(genDiff(filePath1, filePath2, format)).toEqual(resultForTree);
+  expect(genDiff(pathToFile1, pathToFile2, format)).toEqual(resultForTree);
+});
+
+test.each([
+  {
+    file1: 'file1.json', file2: 'file2.json', result: 'resultForTreeStylish.txt',
+  },
+  {
+    file1: 'file1.yml', file2: 'file2.yml', result: 'resultForTreeStylish.txt',
+  },
+])('check function for $file1 and $file2, output in default format', ({ file1, file2, result }) => {
+  const pathToFile1 = getPathToFile(file1);
+  const pathToFile2 = getPathToFile(file2);
+  const resultForTree = readFileSync(`${__dirname}/../__fixtures__/${result}`, 'utf-8');
+  expect(genDiff(pathToFile1, pathToFile2)).toEqual(resultForTree);
 });

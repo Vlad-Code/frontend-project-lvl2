@@ -18,16 +18,17 @@ const getValue = (value, replacer, depth) => {
 };
 
 const getStylish = (diff) => {
-  const iter = (differense, replacer = '  ', depth = 1) => {
+  const iter = (differense, replacer, depth) => {
     const result = differense
       .flatMap((item) => {
-        const {
-          key, children, status, value1, value2,
-        } = item;
-        if (children.length > 0) {
+        if (item.type === 'complex difference') {
+          const { key, children } = item;
           return `${replacer.repeat(depth)}  ${key}: ${iter(children, replacer, depth + 2)}`;
         }
-        switch (status) {
+        const {
+          key, type, value1, value2,
+        } = item;
+        switch (type) {
           case 'deleted':
             return `${replacer.repeat(depth)}- ${key}: ${getValue(value1, replacer, depth)}`;
           case 'added':
@@ -40,12 +41,12 @@ const getStylish = (diff) => {
               `${replacer.repeat(depth)}+ ${key}: ${getValue(value2, replacer, depth)}`,
             ];
           default:
-            throw new Error(`Unknown status: ${status}`);
+            throw new Error(`Unknown status: ${type}`);
         }
       });
     return `{\n${result.join('\n')}\n${replacer.repeat(depth - 1)}}`;
   };
-  return iter(diff);
+  return iter(diff, '  ', 1);
 };
 
 export default getStylish;
