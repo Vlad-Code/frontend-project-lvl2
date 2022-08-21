@@ -10,17 +10,15 @@ const handelValues = (value) => {
   return value;
 };
 
-const getPlain = (diff) => {
+const stringify = (diff) => {
   const iter = (differences, path) => {
     const lines = differences.map((item) => {
-      if (item.type === 'complex difference') {
-        const { key, children } = item;
-        return iter(children, `${path}${key}.`);
-      }
       const {
-        key, type, value1, value2,
+        key, type, children, value1, value2,
       } = item;
       switch (type) {
+        case 'nested':
+          return iter(children, `${path}${key}.`);
         case 'deleted':
           return `Property '${path}${key}' was removed`;
         case 'added':
@@ -38,4 +36,4 @@ const getPlain = (diff) => {
   return iter(diff, '');
 };
 
-export default getPlain;
+export default stringify;

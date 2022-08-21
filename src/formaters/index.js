@@ -1,16 +1,16 @@
-import getPlain from './plain.js';
+import stringify from './plain.js';
 import getStylish from './stylish.js';
 
-const getFormatedOutput = (diff, format = 'stylish') => {
-  switch (format) {
+const getFormatedOutput = (diff, outputFormat) => {
+  switch (outputFormat) {
     case 'stylish':
       return getStylish(diff);
     case 'plain':
-      return getPlain(diff);
+      return stringify(diff);
     case 'json':
       return JSON.stringify(diff);
     default:
-      throw new Error(`Unknown format: ${format}`);
+      throw new Error(`Unknown format: ${outputFormat}`);
   }
 };
 

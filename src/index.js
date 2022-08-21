@@ -17,13 +17,13 @@ const getParsedData = (absolutePathToFile) => {
   return parsedFileData;
 };
 
-const genDiff = (filePath1, filePath2, format) => {
+const genDiff = (filePath1, filePath2, outputFormat = 'stylish') => {
   const absolutePathToFile1 = getAbsolutePathToFile(filePath1);
   const absolutePathToFile2 = getAbsolutePathToFile(filePath2);
   const parsedFileData1 = getParsedData(absolutePathToFile1);
   const parsedFileData2 = getParsedData(absolutePathToFile2);
   const differense = buildDiff(parsedFileData1, parsedFileData2);
-  const formatedOutput = getFormatedOutput(differense, format);
+  const formatedOutput = getFormatedOutput(differense, outputFormat);
   return formatedOutput;
 };
 

@@ -1,50 +1,48 @@
 import _ from 'lodash';
 
-const getValue = (value, replacer, depth) => {
-  const iter = (iterValue, iterReplacer, iterDepth) => {
+const getValue = (value, replacer, replacerCount) => {
+  const iter = (iterValue, iterReplacer, iterReplacerCount) => {
     if (!_.isObject(iterValue)) {
       return iterValue;
     }
     const dataArray = Object.entries(iterValue);
     const lines = dataArray.map(([key, internalValue]) => {
       if (!_.isObject(internalValue)) {
-        return `${replacer.repeat(iterDepth + 2)}  ${key}: ${internalValue}`;
+        return `${replacer.repeat(iterReplacerCount + 3)}${key}: ${internalValue}`;
       }
-      return `${replacer.repeat(iterDepth + 2)}  ${key}: ${iter(internalValue, iterReplacer, iterDepth + 2)}`;
+      return `${replacer.repeat(iterReplacerCount + 3)}${key}: ${iter(internalValue, iterReplacer, iterReplacerCount + 2)}`;
     });
-    return `{\n${lines.join('\n')}\n${iterReplacer.repeat(iterDepth + 1)}}`;
+    return `{\n${lines.join('\n')}\n${iterReplacer.repeat(iterReplacerCount + 1)}}`;
   };
-  return iter(value, replacer, depth);
+  return iter(value, replacer, replacerCount);
 };
 
 const getStylish = (diff) => {
-  const iter = (differense, replacer, depth) => {
+  const iter = (differense, replacer, replacerCount) => {
     const result = differense
       .flatMap((item) => {
-        if (item.type === 'complex difference') {
-          const { key, children } = item;
-          return `${replacer.repeat(depth)}  ${key}: ${iter(children, replacer, depth + 2)}`;
-        }
         const {
-          key, type, value1, value2,
+          key, type, children, value1, value2,
         } = item;
         switch (type) {
+          case 'nested':
+            return `${replacer.repeat(replacerCount)}  ${key}: ${iter(children, replacer, replacerCount + 2)}`;
           case 'deleted':
-            return `${replacer.repeat(depth)}- ${key}: ${getValue(value1, replacer, depth)}`;
+            return `${replacer.repeat(replacerCount)}- ${key}: ${getValue(value1, replacer, replacerCount)}`;
           case 'added':
-            return `${replacer.repeat(depth)}+ ${key}: ${getValue(value2, replacer, depth)}`;
+            return `${replacer.repeat(replacerCount)}+ ${key}: ${getValue(value2, replacer, replacerCount)}`;
           case 'unchanged':
-            return `${replacer.repeat(depth)}  ${key}: ${getValue(value1, replacer, depth)}`;
+            return `${replacer.repeat(replacerCount)}  ${key}: ${getValue(value1, replacer, replacerCount)}`;
           case 'changed':
             return [
-              `${replacer.repeat(depth)}- ${key}: ${getValue(value1, replacer, depth)}`,
-              `${replacer.repeat(depth)}+ ${key}: ${getValue(value2, replacer, depth)}`,
+              `${replacer.repeat(replacerCount)}- ${key}: ${getValue(value1, replacer, replacerCount)}`,
+              `${replacer.repeat(replacerCount)}+ ${key}: ${getValue(value2, replacer, replacerCount)}`,
             ];
           default:
             throw new Error(`Unknown status: ${type}`);
         }
       });
-    return `{\n${result.join('\n')}\n${replacer.repeat(depth - 1)}}`;
+    return `{\n${result.join('\n')}\n${replacer.repeat(replacerCount - 1)}}`;
   };
   return iter(diff, '  ', 1);
 };

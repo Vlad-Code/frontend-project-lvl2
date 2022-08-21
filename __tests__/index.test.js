@@ -14,11 +14,22 @@ const getPathToFile = (fileName) => {
 
 test.each([
   {
-    file1: 'file1.json', file2: 'file2.json', format: 'stylish', result: 'resultForTreeStylish.txt',
+    file1: 'file1.json', file2: 'file2.json', result: 'resultForTreeStylish.txt',
   },
   {
-    file1: 'file1.yml', file2: 'file2.yml', format: 'stylish', result: 'resultForTreeStylish.txt',
+    file1: 'file1.yml', file2: 'file2.yml', result: 'resultForTreeStylish.txt',
   },
+])('check function for $file1 and $file2, output in the default format', ({
+  file1, file2, result,
+}) => {
+  const pathToFile1 = getPathToFile(file1);
+  const pathToFile2 = getPathToFile(file2);
+  const pathToResult = getPathToFile(result);
+  const resultForTree = readFileSync(`${pathToResult}`, 'utf-8');
+  expect(genDiff(pathToFile1, pathToFile2)).toEqual(resultForTree);
+});
+
+test.each([
   {
     file1: 'file1.json', file2: 'file2.json', format: 'plain', result: 'resultForTreePlain.txt',
   },
@@ -31,25 +42,12 @@ test.each([
   {
     file1: 'file1.yml', file2: 'file2.yml', format: 'json', result: 'resultForTreeJSON.json',
   },
-])('check function for $file1 and $file2, output in $format format', ({
+])('check function for $file1 and $file2, output in the $format format', ({
   file1, file2, format, result,
 }) => {
   const pathToFile1 = getPathToFile(file1);
   const pathToFile2 = getPathToFile(file2);
-  const resultForTree = readFileSync(`${__dirname}/../__fixtures__/${result}`, 'utf-8');
+  const pathToResult = getPathToFile(result);
+  const resultForTree = readFileSync(`${pathToResult}`, 'utf-8');
   expect(genDiff(pathToFile1, pathToFile2, format)).toEqual(resultForTree);
-});
-
-test.each([
-  {
-    file1: 'file1.json', file2: 'file2.json', result: 'resultForTreeStylish.txt',
-  },
-  {
-    file1: 'file1.yml', file2: 'file2.yml', result: 'resultForTreeStylish.txt',
-  },
-])('check function for $file1 and $file2, output in default format', ({ file1, file2, result }) => {
-  const pathToFile1 = getPathToFile(file1);
-  const pathToFile2 = getPathToFile(file2);
-  const resultForTree = readFileSync(`${__dirname}/../__fixtures__/${result}`, 'utf-8');
-  expect(genDiff(pathToFile1, pathToFile2)).toEqual(resultForTree);
 });
