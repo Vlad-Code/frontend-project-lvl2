@@ -1,16 +1,13 @@
 <h1>Difference Generator</h1>
 <h2>About</h2>
-<hr>
 <p>This is my second pet project in the Frontend Developer Profession. The difference generator is CLI that compares two files in json or yaml format and build difference in 3 different output formats. The format of output (stylish tree, plain or json) user can choose with built-in option.</p>
 <h2>System requirements</h2>
-<hr>
 <p>node >= 17</p>
 <h2>Installation</h2>
-<hr>
 <p>make install</p>
 <h2>Use</h2>
-<hr>
 <p>See asciinema records below</p>
+
 ### Hexlet tests and linter status:
 [![Node CI](https://github.com/Vlad-Code/frontend-project-lvl2/actions/workflows/nodejs.yml/badge.svg)](https://github.com/Vlad-Code/frontend-project-lvl2/actions/workflows/nodejs.yml)
 [![Actions Status](https://github.com/Vlad-Code/frontend-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/Vlad-Code/frontend-project-lvl2/actions)
