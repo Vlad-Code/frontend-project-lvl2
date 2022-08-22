@@ -21,22 +21,20 @@ const getStylish = (diff) => {
   const iter = (differense, replacer, replacerCount) => {
     const result = differense
       .flatMap((item) => {
-        const {
-          key, type, children, value1, value2,
-        } = item;
+        const { type } = item;
         switch (type) {
           case 'nested':
-            return `${replacer.repeat(replacerCount)}  ${key}: ${iter(children, replacer, replacerCount + 2)}`;
+            return `${replacer.repeat(replacerCount)}  ${item.key}: ${iter(item.children, replacer, replacerCount + 2)}`;
           case 'deleted':
-            return `${replacer.repeat(replacerCount)}- ${key}: ${getValue(value1, replacer, replacerCount)}`;
+            return `${replacer.repeat(replacerCount)}- ${item.key}: ${getValue(item.value1, replacer, replacerCount)}`;
           case 'added':
-            return `${replacer.repeat(replacerCount)}+ ${key}: ${getValue(value2, replacer, replacerCount)}`;
+            return `${replacer.repeat(replacerCount)}+ ${item.key}: ${getValue(item.value2, replacer, replacerCount)}`;
           case 'unchanged':
-            return `${replacer.repeat(replacerCount)}  ${key}: ${getValue(value1, replacer, replacerCount)}`;
+            return `${replacer.repeat(replacerCount)}  ${item.key}: ${getValue(item.value1, replacer, replacerCount)}`;
           case 'changed':
             return [
-              `${replacer.repeat(replacerCount)}- ${key}: ${getValue(value1, replacer, replacerCount)}`,
-              `${replacer.repeat(replacerCount)}+ ${key}: ${getValue(value2, replacer, replacerCount)}`,
+              `${replacer.repeat(replacerCount)}- ${item.key}: ${getValue(item.value1, replacer, replacerCount)}`,
+              `${replacer.repeat(replacerCount)}+ ${item.key}: ${getValue(item.value2, replacer, replacerCount)}`,
             ];
           default:
             throw new Error(`Unknown status: ${type}`);
