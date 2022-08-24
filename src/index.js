@@ -4,11 +4,7 @@ import parse from './parsers.js';
 import buildDiff from './buildDiff.js';
 import getFormatedOutput from './formaters/index.js';
 
-const getAbsolutePathToFile = (pathToFile) => {
-  const cwd = process.cwd();
-  const absolutePathToFile = path.resolve(cwd, pathToFile);
-  return absolutePathToFile;
-};
+const getAbsolutePathToFile = (pathToFile) => path.resolve(process.cwd(), pathToFile);
 
 const getParsedData = (absolutePathToFile) => {
   const dataType = path.extname(absolutePathToFile).slice(1);

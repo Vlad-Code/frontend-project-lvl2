@@ -14,24 +14,21 @@ const buildDiff = (data1, data2) => {
       return {
         key,
         type: 'added',
-        value1: 'doesnt exist',
-        value2: data2[key],
+        value: data2[key],
       };
     }
     if (!_.has(data2, key)) {
       return {
         key,
         type: 'deleted',
-        value1: data1[key],
-        value2: 'doesnt exist',
+        value: data1[key],
       };
     }
     if (data1[key] === data2[key]) {
       return {
         key,
         type: 'unchanged',
-        value1: data1[key],
-        value2: data2[key],
+        value: data1[key],
       };
     }
     return {

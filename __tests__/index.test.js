@@ -14,22 +14,11 @@ const getPathToFile = (fileName) => {
 
 test.each([
   {
-    file1: 'file1.json', file2: 'file2.json', result: 'resultForTreeStylish.txt',
+    file1: 'file1.json', file2: 'file2.json', format: undefined, result: 'resultForTreeStylish.txt',
   },
   {
-    file1: 'file1.yml', file2: 'file2.yml', result: 'resultForTreeStylish.txt',
+    file1: 'file1.yml', file2: 'file2.yml', format: undefined, result: 'resultForTreeStylish.txt',
   },
-])('check function for $file1 and $file2, output in the default format', ({
-  file1, file2, result,
-}) => {
-  const pathToFile1 = getPathToFile(file1);
-  const pathToFile2 = getPathToFile(file2);
-  const pathToResult = getPathToFile(result);
-  const resultForTree = readFileSync(`${pathToResult}`, 'utf-8');
-  expect(genDiff(pathToFile1, pathToFile2)).toEqual(resultForTree);
-});
-
-test.each([
   {
     file1: 'file1.json', file2: 'file2.json', format: 'plain', result: 'resultForTreePlain.txt',
   },
