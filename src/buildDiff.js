@@ -5,7 +5,7 @@ const buildDiff = (data1, data2) => {
   const keys2 = Object.keys(data2);
   const unionKeys = _.union(keys1, keys2);
   const sortedUnionKeys = _.sortBy(unionKeys);
-  const differenses = sortedUnionKeys.map((key) => {
+  const differences = sortedUnionKeys.map((key) => {
     if (_.isPlainObject(data1[key]) && _.isPlainObject(data2[key])) {
       const children = buildDiff(data1[key], data2[key]);
       return { key, type: 'nested', children };
@@ -38,7 +38,7 @@ const buildDiff = (data1, data2) => {
       value2: data2[key],
     };
   });
-  return differenses;
+  return differences;
 };
 
 export default buildDiff;

@@ -1,7 +1,7 @@
 import stringify from './plain.js';
 import getStylish from './stylish.js';
 
-const getFormatedOutput = (diff, outputFormat) => {
+const getFormattedOutput = (diff, outputFormat) => {
   switch (outputFormat) {
     case 'stylish':
       return getStylish(diff);
@@ -14,4 +14,4 @@ const getFormatedOutput = (diff, outputFormat) => {
   }
 };
 
-export default getFormatedOutput;
+export default getFormattedOutput;
